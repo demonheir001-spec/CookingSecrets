@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cooking Secrets</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- TOP RIGHT -->
+<div class="topbar">
+  <span id="status">Guest</span>
+  <button onclick="showCookbook()">Cookbook</button>
+  <button onclick="openLogin()">Login</button>
+</div>
+
+<!-- CENTER -->
+<div class="center">
+  <div class="card">
+    <input id="ingredients" placeholder="Enter ingredients">
+    <br><br>
+    <button class="main-btn" onclick="openBox()">Generate Recipe</button>
+  </div>
+</div>
+
+<!-- RECIPE POPUP -->
+<div id="box">
+  <div>
+    <p id="recipeText">Recipe will appear here</p>
+    <button onclick="addToCookbook()">Add to Cookbook</button>
+    <br><br>
+    <button onclick="closeBox()">Close</button>
+  </div>
+</div>
+
+<!-- LOGIN POPUP -->
+<div id="loginBox" class="popup">
+  <div class="popup-content">
+    <h3>Login</h3>
+
+    <label>
+      <input type="radio" name="role" checked onchange="toggleChef(false)">
+      User
+    </label>
+    <label>
+      <input type="radio" name="role" onchange="toggleChef(true)">
+      Chef
+    </label>
+
+    <div id="chefFields" style="display:none;">
+      <input placeholder="Restaurant Name">
+    </div>
+
+    <br><br>
+    <button onclick="login()">Confirm</button>
+    <button onclick="closeLogin()">Close</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
