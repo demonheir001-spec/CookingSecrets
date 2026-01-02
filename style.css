@@ -5,25 +5,32 @@
 body {
   margin: 0;
   height: 100vh;
-  background: radial-gradient(circle at top left, #6b8cff, transparent 60%),
-    linear-gradient(135deg, #0b1d4a, #1a3cff);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at top left, #6b8cff, transparent 55%),
+    linear-gradient(135deg, #0b1d4a, #162f8f);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Segoe UI", sans-serif;
   color: white;
 }
 
 /* TOP BAR */
 .topbar {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  top: 18px;
+  right: 18px;
   display: flex;
   gap: 12px;
   align-items: center;
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.12);
+  padding: 8px 12px;
+  border-radius: 16px;
 }
 
 .topbar span {
-  opacity: 0.8;
-  font-size: 14px;
+  font-size: 13px;
+  opacity: 0.75;
+  padding-right: 6px;
 }
 
 /* CENTER */
@@ -34,115 +41,172 @@ body {
   align-items: center;
 }
 
-/* CARD */
+/* MAIN CARD */
 .card {
-  backdrop-filter: blur(22px);
+  backdrop-filter: blur(26px);
   background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.18),
+    160deg,
+    rgba(255, 255, 255, 0.22),
     rgba(255, 255, 255, 0.08)
   );
-  padding: 36px;
-  border-radius: 28px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  padding: 38px 36px;
+  border-radius: 30px;
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.45),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3);
   text-align: center;
-
-  /* animation */
-  animation: floatIn 0.6s ease-out;
-}
-
-@keyframes floatIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  min-width: 300px;
 }
 
 /* INPUT */
 input {
-  width: 240px;
+  width: 100%;
   padding: 14px 16px;
-  border-radius: 16px;
+  border-radius: 18px;
   border: none;
   outline: none;
   font-size: 15px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.22);
   color: white;
 }
 
 input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.55);
 }
 
 /* BUTTONS */
 button {
   padding: 12px 18px;
-  border-radius: 16px;
+  border-radius: 18px;
   border: none;
   cursor: pointer;
   font-size: 14px;
-  background: linear-gradient(135deg, #cdd9ff, #ffffff);
+  background: linear-gradient(135deg, #e6ecff, #ffffff);
   color: #0b1d4a;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.25),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    opacity 0.15s ease;
 }
 
 button:hover {
   transform: translateY(-1px);
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, 0.35),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6);
 }
 
+button:active {
+  transform: scale(0.98);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* MAIN CTA */
 .main-btn {
   font-size: 18px;
-  padding: 16px 32px;
+  padding: 16px 34px;
+  margin-top: 14px;
 }
 
-/* OVERLAY */
+/* OVERLAYS */
 .popup,
 #box {
   display: none;
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.45);
-  animation: fadeIn 0.2s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 
 /* POPUP CONTENT */
 .popup-content,
 #box > div {
-  backdrop-filter: blur(24px);
+  backdrop-filter: blur(28px);
   background: linear-gradient(
-    160deg,
-    rgba(255, 255, 255, 0.22),
+    170deg,
+    rgba(255, 255, 255, 0.24),
     rgba(255, 255, 255, 0.1)
   );
   margin: 22% auto;
   padding: 28px;
-  width: 300px;
-  border-radius: 28px;
+  width: 320px;
+  border-radius: 30px;
   text-align: center;
-
-  animation: popIn 0.25s ease-out;
+  box-shadow:
+    0 35px 70px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3);
 }
 
-@keyframes popIn {
-  from {
-    opacity: 0;
-    transform: scale(0.96);
+/* TEXT */
+h3 {
+  margin-top: 0;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+p {
+  line-height: 1.45;
+  font-size: 15px;
+}
+.icon {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+  margin-right: 6px;
+  vertical-align: middle;
+  opacity: 0.85;
+}
+
+.icon.big {
+  width: 18px;
+  height: 18px;
+}
+
+button .icon {
+  margin-right: 8px;
+}
+/* ===== MICRO MOTION (APPLE STYLE) ===== */
+
+/* Gentle breathing pulse for main action */
+@keyframes softPulse {
+  0% {
+    box-shadow:
+      0 0 0 0 rgba(205, 217, 255, 0.35),
+      0 6px 16px rgba(0, 0, 0, 0.25);
   }
-  to {
-    opacity: 1;
-    transform: scale(1);
+  70% {
+    box-shadow:
+      0 0 0 14px rgba(205, 217, 255, 0),
+      0 10px 22px rgba(0, 0, 0, 0.35);
   }
+  100% {
+    box-shadow:
+      0 0 0 0 rgba(205, 217, 255, 0),
+      0 6px 16px rgba(0, 0, 0, 0.25);
+  }
+}
+
+/* Apply pulse */
+.main-btn {
+  animation: softPulse 3.5s ease-in-out infinite;
+}
+
+/* Stop pulse on hover (Apple does this) */
+.main-btn:hover {
+  animation: none;
+}
+
+/* Tap feedback */
+button:active {
+  transform: scale(0.96);
+}
+
+/* Popup entrance refinement */
+.popup-content,
+#box > div {
+  animation: popIn 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
