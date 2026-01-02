@@ -1,80 +1,84 @@
+/* ===== APP STATE ===== */
 let used = false;
 let loggedIn = false;
 let role = "Guest";
 
-const OPENAI_KEY = "";
-
+/* ===== MAIN ACTION ===== */
 async function openBox() {
-  let ing = document.getElementById("ingredients").value;
+  const ing = document.getElementById("ingredients").value;
+  const btn = document.querySelector(".main-btn");
 
+  if (btn) btn.style.animation = "none";
+
+  // Guest limit
   if (used && !loggedIn) {
     document.getElementById("recipeText").innerText =
-      "Limit reached. Please login.";
+      "Limit reached. Please login to continue.";
     document.getElementById("box").style.display = "block";
     return;
   }
 
-  document.getElementById("recipeText").innerText = "Thinking...";
+  document.getElementById("recipeText").innerText =
+    "Creating your recipe…";
   document.getElementById("box").style.display = "block";
 
-  try {
-    let res = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + OPENAI_KEY
-      },
-      body: JSON.stringify({
-        model: "gpt-3.5-turbo",
-        messages: [
-          {
-            role: "system",
-            content: "You are a helpful cooking assistant."
-          },
-          {
-            role: "user",
-            content: "Create a simple recipe using: " + (ing || "basic ingredients")
-          }
-        ]
-      })
-    });
-
-    let data = await res.json();
-    let text = data.choices[0].message.content;
-
-    document.getElementById("recipeText").innerText = text;
+  // Fake AI (safe demo)
+  setTimeout(() => {
+    document.getElementById("recipeText").innerText =
+      `Recipe using ${ing || "basic ingredients"}:\n\n` +
+      `1. Heat oil in a pan\n` +
+      `2. Add ingredients and sauté\n` +
+      `3. Season and cook until done\n\nEnjoy 🍽️`;
 
     if (!loggedIn) used = true;
-
-  } catch (e) {
-    document.getElementById("recipeText").innerText =
-      "AI error. Check API key.";
-  }
+  }, 900);
 }
 
+/* ===== POPUP ===== */
 function closeBox() {
   document.getElementById("box").style.display = "none";
 }
 
+/* ===== COOKBOOK ===== */
 function addToCookbook() {
   if (!loggedIn) {
     document.getElementById("recipeText").innerText =
-      "Login required to save";
+      "Please login to save recipes.";
     return;
   }
-  localStorage.setItem("cookbook", document.getElementById("recipeText").innerText);
-  document.getElementById("recipeText").innerText = "Saved ✔";
+
+  localStorage.setItem(
+    "cookbook",
+    document.getElementById("recipeText").innerText
+  );
+
+  document.getElementById("recipeText").innerText =
+    "Saved to Cookbook ✔";
 }
 
 function showCookbook() {
-  let saved = localStorage.getItem("cookbook");
-  document.getElementById("recipeText").innerText =
-    saved ? saved : "Cookbook empty";
+  const saved = localStorage.getItem("cookbook");
+
+  if (!saved) {
+    document.getElementById("recipeText").innerHTML = `
+      <div style="text-align:center;opacity:0.85;">
+        <svg class="icon big" viewBox="0 0 24 24" style="margin-bottom:12px;">
+          <path d="M6 4h13v16H6c-1.7 0-3 1.3-3 3V7c0-1.7 1.3-3 3-3z"/>
+        </svg>
+        <p style="margin:0;font-size:16px;">Your cookbook is empty</p>
+        <p style="margin-top:8px;font-size:13px;opacity:0.7;">
+          Generate a recipe and save it here
+        </p>
+      </div>
+    `;
+  } else {
+    document.getElementById("recipeText").innerText = saved;
+  }
+
   document.getElementById("box").style.display = "block";
 }
 
-/* LOGIN */
-
+/* ===== LOGIN ===== */
 function openLogin() {
   document.getElementById("loginBox").style.display = "block";
 }
@@ -84,7 +88,8 @@ function closeLogin() {
 }
 
 function toggleChef(isChef) {
-  document.getElementById("chefFields").style.display = isChef ? "block" : "none";
+  document.getElementById("chefFields").style.display =
+    isChef ? "block" : "none";
   role = isChef ? "Chef" : "User";
 }
 
